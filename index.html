@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Controle de Pedidos - Elo Scientifique</title>
+    <title>Controle de Pedidos - ELOSCIENTIFC</title>
     <!-- Importando o SDK do Firebase -->
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
@@ -349,7 +349,7 @@
     <div id="aba-enviar-fornecedor" class="tab-content">
         <h2>Enviar Pedido para o Fornecedor</h2>
         <div class="report-box">
-            <p style="color: #64748b; margin-top: 0; line-height: 1.5;">Selecione o fornecedor para montar a solicitação com os dados da empresa <b>Elo Scientifique</b> e escolha entre copiar para o WhatsApp/E-mail ou baixar o documento em PDF.</p>
+            <p style="color: #64748b; margin-top: 0; line-height: 1.5;">Selecione o fornecedor para montar a solicitação com os dados da empresa <b>ELOSCIENTIFC</b> e escolha entre copiar para o WhatsApp/E-mail ou baixar o documento em PDF.</p>
             
             <div style="display: flex; gap: 15px; align-items: center; margin-bottom: 20px; flex-wrap: wrap;">
                 <div>
@@ -370,11 +370,11 @@
             </div>
         </div>
 
-        <!-- ESTRUTURA OCULTA PARA GERAÇÃO DO PDF DA ELO SCIENTIFIQUE -->
+        <!-- ESTRUTURA OCULTA PARA GERAÇÃO DO PDF DA ELOSCIENTIFC -->
         <div id="docSolicitacaoPDF">
             <div style="border-bottom: 2px solid #0f172a; padding-bottom: 15px; margin-bottom: 20px; display: flex; justify-content: space-between; align-items: flex-start;">
                 <div>
-                    <h2 style="margin: 0; color: #0f172a; font-size: 22px;">ELO SCIENTIFIQUE</h2>
+                    <h2 style="margin: 0; color: #0f172a; font-size: 22px;">ELOSCIENTIFC</h2>
                     <p style="margin: 4px 0; font-size: 12px; color: #475569;">CNPJ: 44.841.520/0001-00</p>
                     <p style="margin: 4px 0; font-size: 12px; color: #475569;">Endereço: Rua Guilherme de Carvalho Whitaker, 276 – Jd. Bongiovani – Presidente Prudente/SP</p>
                     <p style="margin: 4px 0; font-size: 12px; color: #475569;">E-mail para cotação: compras@eloscientific.com.br</p>
@@ -515,13 +515,14 @@
     // COLE ABAIXO A SUA CONFIGURAÇÃO DO FIREBASE
     // ----------------------------------------------------
     const firebaseConfig = {
-        apiKey: "AIzaSyA4y5bD1XcQ96dUw6eIDgoKCOxGvt8MSb4",
-        authDomain: "relatorio-de-notas-fornecedor.firebaseapp.com",
-        projectId: "relatorio-de-notas-fornecedor",
-        storageBucket: "relatorio-de-notas-fornecedor.firebasestorage.app",
-        messagingSenderId: "20581408187",
-        appId: "1:20581408187:web:36d57da304001269ab389e"
-    };
+          apiKey: "AIzaSyA4y5bD1XcQ96dUw6eIDgoKCOxGvt8MSb4",
+  authDomain: "relatorio-de-notas-fornecedor.firebaseapp.com",
+  projectId: "relatorio-de-notas-fornecedor",
+  storageBucket: "relatorio-de-notas-fornecedor.firebasestorage.app",
+  messagingSenderId: "20581408187",
+  appId: "1:20581408187:web:36d57da304001269ab389e"
+};
+
 
     firebase.initializeApp(firebaseConfig);
     const db = firebase.firestore();
@@ -569,6 +570,10 @@
 
         document.querySelector(`.tabs button:nth-child(${mapaAbas[abaId]})`).classList.add('active');
         document.getElementById(`aba-${abaId}`).classList.add('active');
+        
+        // Garante que os relatórios sejam renderizados ao abrir suas respectivas abas
+        if (abaId === 'relatorio-recebidos') renderizarRelatorioRecebidos();
+        if (abaId === 'relatorio-faltantes') renderizarRelatorioFaltantes();
     }
 
     function adicionarPedido() {
@@ -720,13 +725,13 @@
         });
 
         if (itensDoForn.length === 0) {
-            textarea.value = `ELO SCIENTIFIQUE (CNPJ: 44.841.520/0001-00)\nE-mail: compras@eloscientific.com.br\n\nOlá, *${fornecedorSelecionado}*!\n\nNão há itens pendentes ou parciais cadastrados para este fornecedor no momento.`;
+            textarea.value = `ELOSCIENTIFC (CNPJ: 44.841.520/0001-00)\nE-mail: compras@eloscientific.com.br\n\nOlá, *${fornecedorSelecionado}*!\n\nNão há itens pendentes ou parciais cadastrados para este fornecedor no momento.`;
             pdfTbody.innerHTML = `<tr><td colspan="3" style="text-align: center; padding: 15px; color: #64748b;">Nenhum item pendente para este fornecedor.</td></tr>`;
             return;
         }
 
         let texto = `*SOLICITAÇÃO DE COMPRA / COTAÇÃO*\n`;
-        texto += `Empresa: ELO SCIENTIFIQUE (CNPJ: 44.841.520/0001-00)\n`;
+        texto += `Empresa: ELOSCIENTIFC (CNPJ: 44.841.520/0001-00)\n`;
         texto += `E-mail: compras@eloscientific.com.br\n\n`;
         texto += `Olá, *${fornecedorSelecionado}*! Segue a nossa solicitação de materiais:\n\n`;
 
