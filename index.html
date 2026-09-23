@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Controle de Pedidos a Fornecedores - Nuvem Firebase</title>
+    <title>Controle de Pedidos - Elo Scientifique</title>
     <!-- Importando o SDK do Firebase -->
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
@@ -58,7 +58,7 @@
             margin-bottom: 20px;
         }
 
-        /* Sistema de Abas Moderno */
+        /* Sistema de Abas */
         .tabs {
             display: flex;
             gap: 8px;
@@ -101,7 +101,7 @@
             display: block;
         }
 
-        /* Dashboard de Cards */
+        /* Dashboard */
         .dashboard {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -138,30 +138,17 @@
         }
 
         /* Toolbar e Filtros */
-        .toolbar {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 15px;
-            margin-bottom: 20px;
-            justify-content: space-between;
-            align-items: center;
+        .toolbar, .filter-row, .report-box {
             background: #f8fafc;
             padding: 16px;
             border-radius: 10px;
             border: 1px solid var(--border-color);
+            margin-bottom: 20px;
         }
 
-        .filter-row {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 12px;
-            margin-bottom: 20px;
-            background: #f8fafc;
-            padding: 16px;
-            border-radius: 10px;
-            border: 1px solid var(--border-color);
-            align-items: center;
-        }
+        .toolbar { display: flex; justify-content: space-between; align-items: center; }
+        .filter-row { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; }
+        .report-box { max-width: 800px; }
 
         button {
             background-color: var(--secondary-color);
@@ -179,9 +166,7 @@
             box-shadow: 0 2px 4px rgba(0,0,0,0.05);
         }
 
-        button:hover {
-            background-color: #1d4ed8;
-        }
+        button:hover { background-color: #1d4ed8; }
 
         .btn-success { background-color: #10b981; }
         .btn-success:hover { background-color: #059669; }
@@ -214,20 +199,9 @@
             box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
         }
 
-        input[type="text"] {
-            min-width: 180px;
-        }
+        input[type="text"] { min-width: 180px; }
 
-        .report-box {
-            background: #f8fafc;
-            border: 1px solid var(--border-color);
-            padding: 24px;
-            border-radius: 12px;
-            margin-bottom: 20px;
-            max-width: 800px;
-        }
-
-        /* Estilização Avançada de Tabelas */
+        /* Tabelas */
         .table-responsive {
             overflow-x: auto;
             border-radius: 10px;
@@ -236,12 +210,7 @@
             box-shadow: 0 1px 3px rgba(0,0,0,0.02);
         }
 
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            text-align: left;
-            background: white;
-        }
+        table { width: 100%; border-collapse: collapse; text-align: left; background: white; }
 
         th {
             background-color: var(--primary-color);
@@ -261,9 +230,7 @@
             vertical-align: middle;
         }
 
-        tr:hover {
-            background-color: #f8fafc;
-        }
+        tr:hover { background-color: #f8fafc; }
 
         [contenteditable="true"] {
             background-color: var(--editable-bg) !important;
@@ -296,23 +263,11 @@
         .status-parcial { background: #e0f2fe; color: #0369a1; border: 1px solid #bae6fd; }
         .status-recebido { background: #d1fae5; color: #047857; border: 1px solid #a7f3d0; }
 
-        .actions-cell {
-            text-align: center;
-            width: 70px;
-        }
+        .actions-cell { text-align: center; width: 70px; }
+        .checkbox-cell { text-align: center; width: 40px; }
+        input[type="checkbox"] { width: 18px; height: 18px; cursor: pointer; }
 
-        .checkbox-cell {
-            text-align: center;
-            width: 40px;
-        }
-
-        input[type="checkbox"] {
-            width: 18px;
-            height: 18px;
-            cursor: pointer;
-        }
-
-        /* Área de Impressão da Solicitação em PDF */
+        /* Documento PDF Oculto para Impressão */
         #docSolicitacaoPDF {
             display: none;
             background: white;
@@ -321,7 +276,6 @@
             color: #0f172a;
         }
 
-        /* Otimização para Impressão Perfeita */
         @media print {
             body { background: white; padding: 0; color: black; }
             .container > *:not(#aba-enviar-fornecedor) { display: none !important; }
@@ -351,9 +305,7 @@
     <!-- ABA 1: GESTÃO DE PEDIDOS -->
     <div id="aba-pedidos" class="tab-content active">
         <div class="toolbar">
-            <div class="toolbar-group">
-                <button class="btn-success" onclick="adicionarPedido()">➕ Novo Pedido</button>
-            </div>
+            <button class="btn-success" onclick="adicionarPedido()">➕ Novo Pedido</button>
         </div>
 
         <div class="filter-row">
@@ -372,7 +324,7 @@
         </div>
 
         <div class="table-responsive">
-            <table id="tabelaPedidos">
+            <table>
                 <thead>
                     <tr>
                         <th>Fornecedor</th>
@@ -387,7 +339,7 @@
                     </tr>
                 </thead>
                 <tbody id="corpoTabela">
-                    <tr><td colspan="9" style="text-align: center; color: #64748b; padding: 25px;">Carregando dados da nuvem...</td></tr>
+                    <tr><td colspan="9" style="text-align: center; color: #64748b; padding: 25px;">Carregando dados...</td></tr>
                 </tbody>
             </table>
         </div>
@@ -396,7 +348,7 @@
     <!-- ABA 2: ENVIAR PARA O FORNECEDOR -->
     <div id="aba-enviar-fornecedor" class="tab-content">
         <h2>Enviar Pedido para o Fornecedor</h2>
-        <div class="report-box" style="max-width: 800px;">
+        <div class="report-box">
             <p style="color: #64748b; margin-top: 0; line-height: 1.5;">Selecione o fornecedor para montar a solicitação com os dados da empresa <b>Elo Scientifique</b> e escolha entre copiar para o WhatsApp/E-mail ou baixar o documento em PDF.</p>
             
             <div style="display: flex; gap: 15px; align-items: center; margin-bottom: 20px; flex-wrap: wrap;">
@@ -445,18 +397,12 @@
                         <th style="padding: 10px; font-size: 12px; text-align: left; width: 150px;">Solicitante</th>
                     </tr>
                 </thead>
-                <tbody id="pdfCorpoItens">
-                    <!-- Preenchido via JavaScript -->
-                </tbody>
+                <tbody id="pdfCorpoItens"></tbody>
             </table>
 
             <div style="margin-top: 40px; display: flex; justify-content: space-between;">
-                <div style="border-top: 1px solid #94a3b8; width: 250px; text-align: center; padding-top: 5px; font-size: 12px; color: #475569;">
-                    Assinatura / Compras
-                </div>
-                <div style="border-top: 1px solid #94a3b8; width: 250px; text-align: center; padding-top: 5px; font-size: 12px; color: #475569;">
-                    Aprovação
-                </div>
+                <div style="border-top: 1px solid #94a3b8; width: 250px; text-align: center; padding-top: 5px; font-size: 12px; color: #475569;">Assinatura / Compras</div>
+                <div style="border-top: 1px solid #94a3b8; width: 250px; text-align: center; padding-top: 5px; font-size: 12px; color: #475569;">Aprovação</div>
             </div>
         </div>
     </div>
@@ -491,7 +437,6 @@
                 <button onclick="document.getElementById('mesRecebidos').value=''; renderizarRelatorioRecebidos();" style="background-color: #64748b;">Limpar Filtro de Mês</button>
                 <button class="btn-danger" onclick="excluirSelecionados('recebidos')">🗑️ Excluir Selecionados</button>
             </div>
-            <small style="color: #64748b;">Dica: Por padrão, todos os itens recebidos são exibidos. Selecione um mês apenas se quiser filtrar.</small>
         </div>
         <div class="table-responsive">
             <table>
@@ -509,7 +454,7 @@
                     </tr>
                 </thead>
                 <tbody id="corpoTabelaRecebidos">
-                    <tr><td colspan="9" style="text-align: center; color: #64748b; padding: 25px;">Carregando...</td></tr>
+                    <tr><td colspan="9" style="text-align: center; color: #64748b; padding: 25px;">Nenhum item encontrado.</td></tr>
                 </tbody>
             </table>
         </div>
@@ -526,7 +471,6 @@
                 <button onclick="document.getElementById('mesFaltantes').value=''; renderizarRelatorioFaltantes();" style="background-color: #64748b;">Limpar Filtro de Mês</button>
                 <button class="btn-danger" onclick="excluirSelecionados('faltantes')">🗑️ Excluir Selecionados</button>
             </div>
-            <small style="color: #64748b;">Dica: Por padrão, todos os itens faltantes são exibidos. Selecione um mês apenas se quiser filtrar.</small>
         </div>
         <div class="table-responsive">
             <table>
@@ -544,7 +488,7 @@
                     </tr>
                 </thead>
                 <tbody id="corpoTabelaFaltantes">
-                    <tr><td colspan="9" style="text-align: center; color: #64748b; padding: 25px;">Nenhum item faltante encontrado.</td></tr>
+                    <tr><td colspan="9" style="text-align: center; color: #64748b; padding: 25px;">Nenhum item encontrado.</td></tr>
                 </tbody>
             </table>
         </div>
@@ -567,14 +511,16 @@
 </div>
 
 <script>
+    // ----------------------------------------------------
     // COLE ABAIXO A SUA CONFIGURAÇÃO DO FIREBASE
+    // ----------------------------------------------------
     const firebaseConfig = {
-        apiKey: "AIzaSyB_stAqlEz81bKnAWk1LPqoU9v6W6TVuo8",
-        authDomain: "seu-projeto.firebaseapp.com",
-        projectId: "seu-projeto",
-        storageBucket: "seu-projeto.appspot.com",
-        messagingSenderId: "SEU_SENDER_ID",
-        appId: "SEU_APP_ID"
+        apiKey: "AIzaSyA4y5bD1XcQ96dUw6eIDgoKCOxGvt8MSb4",
+        authDomain: "relatorio-de-notas-fornecedor.firebaseapp.com",
+        projectId: "relatorio-de-notas-fornecedor",
+        storageBucket: "relatorio-de-notas-fornecedor.firebasestorage.app",
+        messagingSenderId: "20581408187",
+        appId: "1:20581408187:web:36d57da304001269ab389e"
     };
 
     firebase.initializeApp(firebaseConfig);
@@ -851,7 +797,6 @@
             const status = calcularStatus(item.qtdSolicitada, item.qtdEntregue).texto;
             if (status !== "Recebido") return false;
 
-            // Se houver mês selecionado, filtra por ele. Se não houver, exibe todos.
             if (mesVal) {
                 const anoMesItem = extrairAnoMes(item.dataPedido);
                 if (anoMesItem !== mesVal) return false;
@@ -893,7 +838,6 @@
             const status = calcularStatus(item.qtdSolicitada, item.qtdEntregue).texto;
             if (status === "Recebido") return false;
 
-            // Se houver mês selecionado, filtra por ele. Se não houver, exibe todos.
             if (mesVal) {
                 const anoMesItem = extrairAnoMes(item.dataPedido);
                 if (anoMesItem !== mesVal) return false;
