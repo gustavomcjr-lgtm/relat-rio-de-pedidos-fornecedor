@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Controle de Pedidos - ELOSCIENTIFC</title>
+    <title>Controle de Pedidos - ELOSCIENTIFIC</title>
     <!-- Importando o SDK do Firebase -->
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
@@ -281,7 +281,7 @@
             .container > *:not(#aba-enviar-fornecedor) { display: none !important; }
             #aba-enviar-fornecedor > *:not(#docSolicitacaoPDF) { display: none !important; }
             #docSolicitacaoPDF { display: block !important; width: 100%; }
-            .tabs, .toolbar, .filter-row, .report-box, .actions-cell, .checkbox-cell, #statusNuvem { display: none !important; }
+            .tabs, .toolbar, .filter-row, .report-box, .actions-cell, .checkbox-cell, th:last-child, td:last-child, #statusNuvem { display: none !important; }
             table, th, td { border: 1px solid #cbd5e1; color: #0f172a; }
             th { background-color: #f1f5f9 !important; color: #0f172a !important; -webkit-print-color-adjust: exact; }
         }
@@ -349,7 +349,7 @@
     <div id="aba-enviar-fornecedor" class="tab-content">
         <h2>Enviar Pedido para o Fornecedor</h2>
         <div class="report-box">
-            <p style="color: #64748b; margin-top: 0; line-height: 1.5;">Selecione o fornecedor para montar a solicitação com os dados da empresa <b>ELOSCIENTIFC</b> e escolha entre copiar para o WhatsApp/E-mail ou baixar o documento em PDF.</p>
+            <p style="color: #64748b; margin-top: 0; line-height: 1.5;">Selecione o fornecedor para montar a solicitação com os dados da empresa <b>ELOSCIENTIFIC</b> e escolha entre copiar para o WhatsApp/E-mail ou baixar o documento em PDF.</p>
             
             <div style="display: flex; gap: 15px; align-items: center; margin-bottom: 20px; flex-wrap: wrap;">
                 <div>
@@ -370,11 +370,11 @@
             </div>
         </div>
 
-        <!-- ESTRUTURA OCULTA PARA GERAÇÃO DO PDF DA ELOSCIENTIFC -->
+        <!-- ESTRUTURA OCULTA PARA GERAÇÃO DO PDF DA ELOSCIENTIFIC -->
         <div id="docSolicitacaoPDF">
             <div style="border-bottom: 2px solid #0f172a; padding-bottom: 15px; margin-bottom: 20px; display: flex; justify-content: space-between; align-items: flex-start;">
                 <div>
-                    <h2 style="margin: 0; color: #0f172a; font-size: 22px;">ELOSCIENTIFC</h2>
+                    <h2 style="margin: 0; color: #0f172a; font-size: 22px;">ELOSCIENTIFIC</h2>
                     <p style="margin: 4px 0; font-size: 12px; color: #475569;">CNPJ: 44.841.520/0001-00</p>
                     <p style="margin: 4px 0; font-size: 12px; color: #475569;">Endereço: Rua Guilherme de Carvalho Whitaker, 276 – Jd. Bongiovani – Presidente Prudente/SP</p>
                     <p style="margin: 4px 0; font-size: 12px; color: #475569;">E-mail para cotação: compras@eloscientific.com.br</p>
@@ -430,11 +430,10 @@
     <div id="aba-relatorio-recebidos" class="tab-content">
         <h2>Relatório de Itens Recebidos</h2>
         <div class="report-box">
-            <label style="font-weight: 600; display: block; margin-bottom: 8px;">Filtrar por Mês (Opcional):</label>
-            <div style="display: flex; gap: 12px; align-items: center; margin-bottom: 15px; flex-wrap: wrap;">
-                <input type="month" id="mesRecebidos" style="padding: 10px; font-size: 15px;" onchange="renderizarRelatorioRecebidos()">
-                <button class="btn-warning" onclick="imprimirRecebidos()">🖨️ Imprimir Recebidos</button>
-                <button onclick="document.getElementById('mesRecebidos').value=''; renderizarRelatorioRecebidos();" style="background-color: #64748b;">Limpar Filtro de Mês</button>
+            <div style="display: flex; gap: 12px; align-items: center; margin-bottom: 10px; flex-wrap: wrap;">
+                <label style="font-weight: 600;">Filtrar por Mês (Opcional):</label>
+                <input type="month" id="mesRecebidos" style="padding: 8px; font-size: 14px;" onchange="renderizarRelatorioRecebidos()">
+                <button onclick="document.getElementById('mesRecebidos').value=''; renderizarRelatorioRecebidos();" style="background-color: #64748b;">Limpar Filtro</button>
                 <button class="btn-danger" onclick="excluirSelecionados('recebidos')">🗑️ Excluir Selecionados</button>
             </div>
         </div>
@@ -451,10 +450,11 @@
                         <th>Status</th>
                         <th>Solicitante</th>
                         <th>Conferente</th>
+                        <th class="actions-cell">Imprimir</th>
                     </tr>
                 </thead>
                 <tbody id="corpoTabelaRecebidos">
-                    <tr><td colspan="9" style="text-align: center; color: #64748b; padding: 25px;">Nenhum item encontrado.</td></tr>
+                    <tr><td colspan="10" style="text-align: center; color: #64748b; padding: 25px;">Nenhum item encontrado.</td></tr>
                 </tbody>
             </table>
         </div>
@@ -464,11 +464,10 @@
     <div id="aba-relatorio-faltantes" class="tab-content">
         <h2>Relatório de Itens Faltantes (Pendentes / Parciais)</h2>
         <div class="report-box">
-            <label style="font-weight: 600; display: block; margin-bottom: 8px;">Filtrar por Mês (Opcional):</label>
-            <div style="display: flex; gap: 12px; align-items: center; margin-bottom: 15px; flex-wrap: wrap;">
-                <input type="month" id="mesFaltantes" style="padding: 10px; font-size: 15px;" onchange="renderizarRelatorioFaltantes()">
-                <button class="btn-warning" onclick="window.print()">🖨️ Imprimir Faltantes</button>
-                <button onclick="document.getElementById('mesFaltantes').value=''; renderizarRelatorioFaltantes();" style="background-color: #64748b;">Limpar Filtro de Mês</button>
+            <div style="display: flex; gap: 12px; align-items: center; margin-bottom: 10px; flex-wrap: wrap;">
+                <label style="font-weight: 600;">Filtrar por Mês (Opcional):</label>
+                <input type="month" id="mesFaltantes" style="padding: 8px; font-size: 14px;" onchange="renderizarRelatorioFaltantes()">
+                <button onclick="document.getElementById('mesFaltantes').value=''; renderizarRelatorioFaltantes();" style="background-color: #64748b;">Limpar Filtro</button>
                 <button class="btn-danger" onclick="excluirSelecionados('faltantes')">🗑️ Excluir Selecionados</button>
             </div>
         </div>
@@ -485,10 +484,11 @@
                         <th>Status</th>
                         <th>Solicitante</th>
                         <th>Conferente</th>
+                        <th class="actions-cell">Imprimir</th>
                     </tr>
                 </thead>
                 <tbody id="corpoTabelaFaltantes">
-                    <tr><td colspan="9" style="text-align: center; color: #64748b; padding: 25px;">Nenhum item encontrado.</td></tr>
+                    <tr><td colspan="10" style="text-align: center; color: #64748b; padding: 25px;">Nenhum item encontrado. Tudo em dia!</td></tr>
                 </tbody>
             </table>
         </div>
@@ -571,7 +571,6 @@
         document.querySelector(`.tabs button:nth-child(${mapaAbas[abaId]})`).classList.add('active');
         document.getElementById(`aba-${abaId}`).classList.add('active');
         
-        // Garante que os relatórios sejam renderizados ao abrir suas respectivas abas
         if (abaId === 'relatorio-recebidos') renderizarRelatorioRecebidos();
         if (abaId === 'relatorio-faltantes') renderizarRelatorioFaltantes();
     }
@@ -725,13 +724,13 @@
         });
 
         if (itensDoForn.length === 0) {
-            textarea.value = `ELOSCIENTIFC (CNPJ: 44.841.520/0001-00)\nE-mail: compras@eloscientific.com.br\n\nOlá, *${fornecedorSelecionado}*!\n\nNão há itens pendentes ou parciais cadastrados para este fornecedor no momento.`;
+            textarea.value = `ELOSCIENTIFIC (CNPJ: 44.841.520/0001-00)\nE-mail: compras@eloscientific.com.br\n\nOlá, *${fornecedorSelecionado}*!\n\nNão há itens pendentes ou parciais cadastrados para este fornecedor no momento.`;
             pdfTbody.innerHTML = `<tr><td colspan="3" style="text-align: center; padding: 15px; color: #64748b;">Nenhum item pendente para este fornecedor.</td></tr>`;
             return;
         }
 
         let texto = `*SOLICITAÇÃO DE COMPRA / COTAÇÃO*\n`;
-        texto += `Empresa: ELOSCIENTIFC (CNPJ: 44.841.520/0001-00)\n`;
+        texto += `Empresa: ELOSCIENTIFIC (CNPJ: 44.841.520/0001-00)\n`;
         texto += `E-mail: compras@eloscientific.com.br\n\n`;
         texto += `Olá, *${fornecedorSelecionado}*! Segue a nossa solicitação de materiais:\n\n`;
 
@@ -810,7 +809,7 @@
         });
 
         if (filtrados.length === 0) {
-            tbody.innerHTML = `<tr><td colspan="9" style="text-align: center; color: #64748b; padding: 25px;">Nenhum item recebido encontrado.</td></tr>`;
+            tbody.innerHTML = `<tr><td colspan="10" style="text-align: center; color: #64748b; padding: 25px;">Nenhum item recebido encontrado.</td></tr>`;
             return;
         }
 
@@ -827,6 +826,9 @@
                 <td><span class="status-badge ${statusObj.classe}">${statusObj.texto}</span></td>
                 <td>${item.solicitante || ''}</td>
                 <td>${item.conferente || ''}</td>
+                <td class="actions-cell">
+                    <button class="btn-warning" style="padding: 6px 10px; font-size: 12px;" onclick="imprimirItemIndividual('${item.fornecedor}', '${item.item}', '${item.dataPedido}', '${item.qtdSolicitada}', '${item.qtdEntregue}', '${statusObj.texto}', '${item.solicitante}', '${item.conferente}')">🖨️</button>
+                </td>
             `;
             tbody.appendChild(tr);
         });
@@ -851,7 +853,7 @@
         });
 
         if (filtrados.length === 0) {
-            tbody.innerHTML = `<tr><td colspan="9" style="text-align: center; color: #64748b; padding: 25px;">Nenhum item faltante encontrado. Tudo em dia!</td></tr>`;
+            tbody.innerHTML = `<tr><td colspan="10" style="text-align: center; color: #64748b; padding: 25px;">Nenhum item faltante encontrado. Tudo em dia!</td></tr>`;
             return;
         }
 
@@ -868,9 +870,52 @@
                 <td><span class="status-badge ${statusObj.classe}">${statusObj.texto}</span></td>
                 <td>${item.solicitante || ''}</td>
                 <td>${item.conferente || ''}</td>
+                <td class="actions-cell">
+                    <button class="btn-warning" style="padding: 6px 10px; font-size: 12px;" onclick="imprimirItemIndividual('${item.fornecedor}', '${item.item}', '${item.dataPedido}', '${item.qtdSolicitada}', '${item.qtdEntregue}', '${statusObj.texto}', '${item.solicitante}', '${item.conferente}')">🖨️</button>
+                </td>
             `;
             tbody.appendChild(tr);
         });
+    }
+
+    function imprimirItemIndividual(fornecedor, item, dataPedido, sol, ent, status, solicitante, conferente) {
+        const janelaImpressao = window.open('', '', 'width=900,height=600');
+        janelaImpressao.document.write(`
+            <html>
+            <head>
+                <title>Comprovante de Item - ELOSCIENTIFIC</title>
+                <style>
+                    body { font-family: Arial, sans-serif; padding: 20px; color: #0f172a; }
+                    h2 { margin-bottom: 0; color: #0f172a; }
+                    .empresa-info { font-size: 12px; color: #475569; margin-bottom: 20px; border-bottom: 2px solid #0f172a; padding-bottom: 10px; }
+                    table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+                    th, td { border: 1px solid #cbd5e1; padding: 12px; text-align: left; font-size: 14px; }
+                    th { background-color: #f1f5f9; }
+                </style>
+            </head>
+            <body>
+                <h2>ELOSCIENTIFIC</h2>
+                <div class="empresa-info">
+                    CNPJ: 44.841.520/0001-00 | Rua Guilherme de Carvalho Whitaker, 276 – Presidente Prudente/SP
+                </div>
+                <h3>Detalhes do Item</h3>
+                <table>
+                    <tr><th>Fornecedor</th><td>${fornecedor}</td></tr>
+                    <tr><th>Item / Descrição</th><td>${item}</td></tr>
+                    <tr><th>Data do Pedido</th><td>${dataPedido}</td></tr>
+                    <tr><th>Qtd Solicitada</th><td>${sol}</td></tr>
+                    <tr><th>Qtd Entregue</th><td>${ent}</td></tr>
+                    <tr><th>Status</th><td><b>${status}</b></td></tr>
+                    <tr><th>Solicitante</th><td>${solicitante}</td></tr>
+                    <tr><th>Conferente</th><td>${conferente}</td></tr>
+                </table>
+                <script>
+                    window.onload = function() { window.print(); window.close(); }
+                <\/script>
+            </body>
+            </html>
+        `);
+        janelaImpressao.document.close();
     }
 
     function toggleSelectAll(tipo, masterCheckbox) {
@@ -905,11 +950,6 @@
             alert("Erro ao excluir itens. Tente novamente.");
             console.error(erro);
         }
-    }
-
-    function imprimirRecebidos() {
-        renderizarRelatorioRecebidos();
-        setTimeout(() => window.print(), 300);
     }
 
     function fazerBackup() {
